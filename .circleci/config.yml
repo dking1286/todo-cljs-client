@@ -85,6 +85,7 @@ jobs:
             docker build \
               --build-arg JAR_PATH="./workspace/out/app.jar" \
               --build-arg RESOURCE_PUBLIC_PATH="./workspace/out/resources/public" \
+              . \
               -t "dking1286/todo-cljs-client:${CIRCLE_SHA1}"
             docker push dking1286/todo-cljs-client
 
