@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Copy to workspace
           command: |
-            mkdir -p workspace/out/resources
+            mkdir -p workspace/out/resources/public
             cp ./target/uberjar/todo-cljs-client-standalone.jar ./workspace/out/app.jar
             cp -r ./resources/public/* ./workspace/out/resources/public
       - persist_to_workspace:
