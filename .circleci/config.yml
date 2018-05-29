@@ -1,0 +1,121 @@
+version: 2
+jobs:
+  test:
+    working_directory: ~/todo-cljs-client
+    docker:
+      - image: theasp/clojurescript-nodejs:latest
+    environment:
+      LEIN_ROOT: nbd
+      JVM_OPTS: -Xmx3200m
+      CIRCLECI_CACHE_KEY: todo-cljs-client-{{ checksum "project.clj" }}
+    steps:
+      - checkout
+      - restore_cache:
+          key: $CIRCLECI_CACHE_KEY
+      - run:
+          name: Install dependencies
+          command: lein deps
+      - save_cache:
+          path:
+            - ~/.m2
+            - ~/.lein
+          key: $CIRCLECI_CACHE_KEY
+      - run:
+          name: Run all server tests
+          command: lein test-server:once
+      - run:
+          name: Run all client tests
+          command: lein test-client:once
+
+  build:
+    working_directory: ~/todo-cljs-client
+    environment:
+      LEIN_ROOT: nbd
+      JVM_OPTS: -Xmx3200m
+      CIRCLECI_CACHE_KEY: todo-cljs-client-{{ checksum "project.clj" }}
+    docker:
+      - image: circleci/clojure:lein-2.7.1
+    steps:
+      - checkout
+      - restore_cache:
+          key: $CIRCLECI_CACHE_KEY  
+      - run:
+          name: Install dependencies
+          command: lein deps
+      - save_cache:
+          paths:
+            - ~/.m2
+            - ~/.lein
+          key: $CIRCLECI_CACHE_KEY
+      - run:
+          name: Build client binary
+          command: lein build-client:prod
+      - run:
+          name: Build server binary
+          command: lein build-server:prod
+      - run:
+          name: Copy to workspace
+          command: |
+            mkdir -p workspace/out/resources
+            cp ./target/uberjar/todo-cljs-client-standalone.jar ./workspace/out/app.jar
+            cp -r ./resources/public/* ./workspace/out/resources/public
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - out
+    
+  build-container:
+    working_directory: ~/todo-cljs-client
+    environment:
+      LEIN_ROOT: nbd
+      JVM_OPTS: -Xmx3200m
+      CIRCLECI_CACHE_KEY: todo-cljs-client-{{ checksum "project.clj" }}
+    docker:
+      - image: circleci/clojure:lein-2.7.1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: workspace
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and publish container
+          command: |
+            echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME --password-stdin
+            docker build \
+              --build-arg JAR_PATH="./workspace/out/app.jar" \
+              --build-arg RESOURCE_PUBLIC_PATH="./workspace/out/resources/public" \
+              -t "dking1286/todo-cljs-client:${CIRCLE_SHA1}"
+            docker push dking1286/todo-cljs-client
+
+  deploy-container-staging:
+    working_directory: ~/todo-cljs-client
+    docker:
+      - image: google/cloud-sdk:latest
+    steps:
+      - checkout
+      - run:
+          name: Deploy to Kubernetes
+          command: |
+            echo $GCLOUD_GKE_SERVICE_KEY > ${HOME}/gcloud-gke-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-gke-service-key.json
+            gcloud --quiet config set project ${GCLOUD_PROJECT_NAME}
+            gcloud --quiet config set compute/zone ${GCLOUD_COMPUTE_ZONE}
+            gcloud --quiet container clusters get-credentials ${GCLOUD_CLUSTER_NAME_STAGING}
+            sed "s/<IMAGE_TAG>/${CIRCLE_SHA1}/g" ./kubernetes/app.deployment.yaml > "${HOME}/gke_deployment.yaml"
+            kubectl apply -f "${HOME}/gke_deployment.yaml"
+            kubectl apply -f ./kubernetes/app.service.yaml
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - test
+      - build
+      - build-container:
+          requires:
+            - test
+            - build
+      - deploy-container-staging:
+          requires:
+            - build-container

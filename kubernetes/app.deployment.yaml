@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: todo-cljs-client-deployment
+  labels:
+    app: todo-cljs-client
+spec:
+  # Number of Pod replicas
+  replicas: 1
+  # Determines which pods the deployment should manage
+  selector:
+    matchLabels:
+      app: todo-cljs-client
+  template:
+    metadata:
+      labels:
+        app: todo-cljs-client
+    spec:
+      containers:
+        - name: todo-cljs-client
+          image: dking/todo-cljs-client:<IMAGE_TAG>
+          ports:
+            - containerPort: 3005
+          env:
+            - name: ENVIRONMENT
+              value: production
