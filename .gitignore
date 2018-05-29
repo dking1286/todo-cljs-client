@@ -13,6 +13,7 @@ pom.xml.asc
 .lein-env
 .nrepl-port
 .cpcache/
+.rebel_readline_history
 figwheel_server.log
 profiles.clj
 resources/public/js/compiled
