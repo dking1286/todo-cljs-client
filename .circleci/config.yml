@@ -16,7 +16,7 @@ jobs:
           name: Install dependencies
           command: lein deps
       - save_cache:
-          path:
+          paths:
             - ~/.m2
             - ~/.lein
           key: $CIRCLECI_CACHE_KEY
