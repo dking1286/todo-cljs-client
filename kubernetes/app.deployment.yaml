@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: todo-cljs-client
-          image: dking/todo-cljs-client:<IMAGE_TAG>
+          image: dking1286/todo-cljs-client:<IMAGE_TAG>
           ports:
             - containerPort: 3005
           env:
