@@ -17,3 +17,5 @@ pom.xml.asc
 figwheel_server.log
 profiles.clj
 resources/public/js/compiled
+.configleaf
+src/cfg
