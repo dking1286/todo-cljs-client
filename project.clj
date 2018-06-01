@@ -13,6 +13,7 @@
                  [compojure "1.6.0"]
                  [com.cognitect/transit-cljs "0.8.256"]
                  [reagent "0.8.1"]
+                 [cljs-react-material-ui "0.2.48"]
                  [figwheel-sidecar "0.5.16"]]
 
   :plugins [[lein-environ "1.1.0"]

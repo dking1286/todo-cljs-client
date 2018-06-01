@@ -1,5 +1,6 @@
 (ns todo-cljs-client.core
-  (:require [goog.dom]
+  (:require [cljsjs.material-ui] ;; Load MaterialUI globally
+            [goog.dom]
             [reagent.core :as reagent]
             [components.root.core :refer [root]]
             [todo-cljs-client.init :refer [on-init]]))

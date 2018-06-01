@@ -1,7 +1,14 @@
-(ns todo-cljs-client.init)
+(ns todo-cljs-client.init
+  (:require [state.core :refer [dispatch]]))
+
+(defonce initialized? (atom false))
 
 (defn on-init
-  "The purpose of this function is mainly to check that I can test cljs
-   functions."
+  "Initializes the application. Is only called one time, even when code is
+  reloaded in development mode by figwheel."
   []
-  (println "Todo cljs initialized"))
+  (when-not @initialized?
+    (do
+      (println "Todo cljs initialized")
+      (dispatch {:type :reset})
+      (swap! initialized? (constantly true)))))
