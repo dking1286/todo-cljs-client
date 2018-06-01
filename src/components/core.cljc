@@ -24,8 +24,7 @@
   directly, use defcomponent instead."
      [component]
      (let [{:keys [store dispatch selectors actions other-meta]}
-           (some-> component meta parse-component-meta)
-           component-wrapped (with-meta component other-meta)]
+           (some-> component meta parse-component-meta)]
        (cond
          (and selectors (nil? store))
          (throw (new js/TypeError "No store provided for selectors"))
@@ -34,15 +33,27 @@
          (throw (new js/TypeError "No dispatch provided for actions"))
 
          :else
-         (fn
-           ([] 
-            (component-wrapped nil))
-           ([props-or-child & children]
-            (if (is-props? props-or-child)
-              (apply component-wrapped props-or-child children)
-              (apply component-wrapped nil props-or-child children))))))))
+         (let [component-wrapped
+               (fn
+                 ([]
+                  (component nil))
+                 ([props-or-child & children]
+                  (if (is-props? props-or-child)
+                    (apply component props-or-child children)
+                    (apply component nil props-or-child children))))]
+           (with-meta component-wrapped other-meta))))))
 
 (defmacro defcomponent
   "Provides syntactic sugar for defining components using create-component"
   [name-sym & forms]
-  `(def ~name-sym (create-component (fn ~@forms))))
+  (cond
+    (string? (first forms))
+    `(defcomponent ~name-sym ~@(rest forms))
+    
+    (map? (first forms))
+    `(def ~name-sym
+       (create-component (with-meta (fn ~@(rest forms)) ~(first forms))))
+
+    :else
+    `(def ~name-sym
+       (create-component (fn ~@forms)))))
