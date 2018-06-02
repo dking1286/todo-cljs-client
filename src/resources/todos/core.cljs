@@ -1,5 +1,6 @@
 (ns resources.todos.core
-  (:require [clojure.spec.alpha :as s]))
+  (:require [clojure.spec.alpha :as s]
+            [resources.todos.reducer]))
 
 (s/def ::id integer?)
 (s/def ::title string?)

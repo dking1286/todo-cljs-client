@@ -1,3 +1,11 @@
 /* sass entry point for the client application */
 
-@import './components';
+@import './components/index';
+
+body {
+    margin: 0;
+}
+
+button {
+    color: inherit;
+}

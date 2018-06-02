@@ -1,0 +1,30 @@
+/* sass entry point for the client application */
+/** Index file for view component styles. */
+.top-nav-bar {
+  margin: 10px; }
+
+.todos-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.new-todo-form {
+  width: 100%;
+  max-width: 600px; }
+
+.new-todo-button {
+  margin-bottom: 12px; }
+
+.new-todo-form-fields {
+  display: flex;
+  flex-direction: column;
+  padding: 12px; }
+
+body {
+  margin: 0; }
+
+button {
+  color: inherit; }
+
+/*# sourceMappingURL=index.css.map */

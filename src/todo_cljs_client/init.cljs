@@ -10,5 +10,4 @@
   (when-not @initialized?
     (do
       (println "Todo cljs initialized")
-      (dispatch {:type :reset})
       (swap! initialized? (constantly true)))))

@@ -1,9 +1,10 @@
 (ns components.todo-list.core
-  (:require [state.core :refer [store dispatch]]
-            [state.selectors :refer [get-todos]]))
+  (:require [resources.todos.selectors :as todos-selectors]
+            [components.core :refer-macros [defcomponent]]))
 
-(defn todo-list
-  []
-  (let [todos (get-todos @store)]
-    [:div
-     (map :title todos)]))
+(defcomponent todo-list
+  "View component representing a list of todo items."
+  [{:keys [todos]} & children]
+  [:div.todo-list
+   "Todo list"])
+

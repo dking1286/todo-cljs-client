@@ -98,13 +98,16 @@
   :aliases
   {"clean-server" ["shell" "rm" "-rf" "target"]
    "clean-client" ["do"
+                   ["shell" "echo" "'Cleaning compiled client files'"]
                    ["shell" "rm" "-f" "resources/public/js/compiled/main.js"]
                    ["shell" "rm" "-rf" "resources/public/js/compiled/dev-out"]
-                   ["shell" "rm" "-rf" "resources/public/js/compiled/prod-out"]]
+                   ["shell" "rm" "-rf" "resources/public/js/compiled/prod-out"]
+                   ["shell" "rm" "resources/public/css/*"]]
    "clean-tests" ["do"
                   ["shell" "rm" "-f" "resources/public/js/compiled/tests-main.js"]
                   ["shell" "rm" "-rf" "resources/public/js/compiled/tests-out"]]
    "clean-all-outputs" ["do"
+                        ["shell" "echo" "'Cleaning all outputs'"]
                         ["shell" "rm" "-rf" "resources/public/js/compiled/dev-out"]
                         ["shell" "rm" "-rf" "resources/public/js/compiled/prod-out"]
                         ["shell" "rm" "-rf" "resources/public/js/compiled/tests-out"]]
@@ -112,6 +115,7 @@
                "clean-client"
                ["with-profile" "+dev,+local-dev" "repl"]]
    "server:dev" ["with-profile" "+dev,+local-dev" "ring" "server-headless"]
+   "build-styles:dev" ["shell" "sass" "--watch" "resources/sass/index.scss:resources/public/css/index.css"]
    "test-server:watch" ["with-profile" "+test,+local-test" "test-refresh"]
    "test-server:once" ["with-profile" "+test,+local-test" "test" ":all"]
    "test-client:watch" ["do"
@@ -126,4 +130,5 @@
    "build-client:prod" ["do"
                         "clean-client"
                         ["with-profile" "prod" "cljsbuild" "once" "app-prod"]
+                        ["shell" "sass" "resources/sass/index.scss" "resources/public/css/index.css" --sourcemap=none]
                         "clean-all-outputs"]})

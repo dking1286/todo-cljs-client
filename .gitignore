@@ -19,3 +19,5 @@ profiles.clj
 resources/public/js/compiled
 .configleaf
 src/cfg
+.sass-cache
+
