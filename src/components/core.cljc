@@ -103,7 +103,6 @@
          (let [selected-props (get-selected-props store selectors)
                action-props (get-action-props dispatch actions)
                injected-props (merge selected-props action-props)]
-           (println action-props)
            (if initial-state
              (-> component
                  (wrap-stateful-component initial-state injected-props)
