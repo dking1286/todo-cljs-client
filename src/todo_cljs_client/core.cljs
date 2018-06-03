@@ -1,5 +1,6 @@
 (ns todo-cljs-client.core
-  (:require [cljsjs.material-ui] ;; Load MaterialUI globally
+  (:require [cljs.user] ;; Load user namespace for development
+            [cljsjs.material-ui] ;; Load MaterialUI globally
             [goog.dom]
             [reagent.core :as reagent]
             [resources.core] ;; Initialize resources

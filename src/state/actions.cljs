@@ -4,4 +4,5 @@
   [type]
   (fn
     ([] {:type type})
-    ([opts] (merge opts {:type type}))))
+    ([payload] {:type type :payload payload})
+    ([payload opts] (merge opts {:type type :payload payload}))))

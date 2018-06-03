@@ -1,4 +1,4 @@
 (ns cljs.user
-  (:require [todo-cljs-client.init :as init]))
-
-(enable-console-print!)
+  (:require [state.core :refer [store dispatch]]
+            [state.middleware.logging :refer [toggle-logging]]
+            [resources.todos.actions :as todo-actions]))
