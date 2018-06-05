@@ -1,16 +1,6 @@
 (ns state.selectors
-  #?(:cljs
-     (:require-macros [state.selectors :refer  [defselector]])))
-
-(defn- memoize-last-args
-  [f]
-  (let [previous (atom {:args [] :return nil})]
-    (fn [& args]
-      (if (= args (@previous :args))
-        (@previous :return)
-        (let [return (apply f args)]
-          (swap! previous (constantly {:args args :return return}))
-          return)))))
+  #?(:cljs (:require [utils.function :refer [memoize-last-args]]))
+  #?(:cljs (:require-macros [state.selectors :refer  [defselector]])))
 
 (defn create-selector
   [inputs output]
