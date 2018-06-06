@@ -9,7 +9,7 @@
   {:dispatch dispatch
    :actions {:add-todo todo-actions/add}
    :initial-state {:title nil :body nil :expanded? false}}
-  [state {:keys [add-todo]} & children]
+  [{:keys [add-todo]} state & children]
   [:div.new-todo-form
    (when-not (@state :expanded?)
      [primary-button {:class-name "new-todo-button"

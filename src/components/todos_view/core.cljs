@@ -2,12 +2,11 @@
   (:require [cljs-react-material-ui.reagent :as mui]
             [components.core :refer-macros [defcomponent]]
             [components.todo-list.core :refer [todo-list]]
-            [components.new-todo-form.core :refer [new-todo-form]]
-            [components.primary-button.core :refer [primary-button]]))
+            [components.new-todo-form.core :refer [new-todo-form]]))
 
 (defcomponent todos-view
   "View representing the below-the-fold part of the todo list view."
-  [{:keys [todos]} & children]
+  [props & children]
   [:div.todos-view
    [todo-list]
    [new-todo-form]])

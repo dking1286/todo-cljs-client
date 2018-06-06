@@ -3,7 +3,7 @@
             [state.initial :refer [initial-state]]
             [state.reducer :refer [reducer]]
             [state.middleware.logging :refer [wrap-logging]]
-            [utils.function :as f]))
+            [utils.funcs :as f]))
 
 (defonce store
   (reagent/atom initial-state))

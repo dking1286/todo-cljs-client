@@ -102,7 +102,7 @@
                    ["shell" "rm" "-f" "resources/public/js/compiled/main.js"]
                    ["shell" "rm" "-rf" "resources/public/js/compiled/dev-out"]
                    ["shell" "rm" "-rf" "resources/public/js/compiled/prod-out"]
-                   ["shell" "rm" "resources/public/css/*"]]
+                   ["shell" "rm" "-f" "resources/public/css/*"]]
    "clean-tests" ["do"
                   ["shell" "rm" "-f" "resources/public/js/compiled/tests-main.js"]
                   ["shell" "rm" "-rf" "resources/public/js/compiled/tests-out"]]
