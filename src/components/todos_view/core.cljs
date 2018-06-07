@@ -4,7 +4,7 @@
             [components.todo-list.core :refer [todo-list]]
             [components.new-todo-form.core :refer [new-todo-form]]))
 
-(defcomponent todos-view
+(defn todos-view
   "View representing the below-the-fold part of the todo list view."
   [props & children]
   [:div.todos-view

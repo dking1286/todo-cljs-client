@@ -5,7 +5,7 @@
             [components.top-nav-bar.core :refer [top-nav-bar]]
             [components.todos-view.core :refer [todos-view]]))
 
-(defcomponent root
+(defn root
   "Root view component of the todo list application."
   [props & children]
   [mui/mui-theme-provider
