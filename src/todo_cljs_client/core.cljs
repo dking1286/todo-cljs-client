@@ -1,16 +1,16 @@
 (ns todo-cljs-client.core
-  (:require [cljs.user] ;; Load user namespace for development
-            [cljsjs.material-ui] ;; Load MaterialUI globally
-            [goog.dom]
-            [reagent.core :as reagent]
-            [resources.core] ;; Initialize resources
-            [components.root.core :refer [root]]
-            [todo-cljs-client.init :refer [on-init]]))
+  (:require [cljs.user]  ;; Load user namespace for development
+            [om.next :as om]
+            [om.next.protocols :as protocols]
+            [goog.dom :as gdom]
+            [state.core :refer [state parser]]
+            [components.root.core :refer [Root]]))
 
 (enable-console-print!)
 
-(on-init)
+(def reconciler
+  (om/reconciler {:state state
+                  :parser parser}))
 
-(reagent/render
- [root]
- (goog.dom/getRequiredElement "root"))
+(om/add-root! reconciler Root (gdom/getElement "root"))
+
