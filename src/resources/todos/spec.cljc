@@ -12,3 +12,7 @@
                                  :todos/body
                                  :todos/user-id
                                  :todos/done?]))
+
+(s/def :todos/todo-creation-data (s/keys :req [:todos/title
+                                               :todos/body
+                                               :todos/user-id]))
