@@ -1,7 +1,9 @@
 (ns todo-cljs-client.core
-  (:require [cljs.user]  ;; Load user namespace for development
+  (:require [cljsjs.react] ;; Load react globally
+            [cljsjs.material-ui] ;; Load material ui globally
+            [cljs.user] ;; Load user namespace for development
+            [resources.core] ;; Initialize resource
             [om.next :as om]
-            [om.next.protocols :as protocols]
             [goog.dom :as gdom]
             [state.core :refer [state parser]]
             [components.root.core :refer [Root]]))
