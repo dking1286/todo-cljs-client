@@ -3,8 +3,8 @@
 
 (defmethod read :todos/list
   [{:keys [state]} _ params]
-  (let [{:keys [todos/list todos/by-id]} @state]
-    {:value (into [] (map #(get-in by-id %) list))}))
+  (let [{:keys [todos/list] :as st} @state]
+    {:value (into [] (map #(get-in st %) list))}))
 
 (defmethod read :todos/by-id
   [{:keys [state]} _ {:keys [id]}]

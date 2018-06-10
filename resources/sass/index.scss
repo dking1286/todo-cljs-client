@@ -1,5 +1,6 @@
 /* sass entry point for the client application */
 
+@import './reset';
 @import './components/index';
 
 body {
