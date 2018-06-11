@@ -3,7 +3,7 @@
             [om.dom :as dom]
             [cljs-react-material-ui.core :as mui]
             [components.navbar.core :refer [navbar]]
-            [components.todos-view.core :refer [todos-view TodosView]]
+            [components.todos-view.core :refer [todos-view]]
             [components.todo.core :refer [Todo]]
             [components.new-todo-form.core :refer [NewTodoForm]]))
 

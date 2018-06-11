@@ -12,7 +12,9 @@
     (let [{list :todos/list todo-form :todos/new-todo-form} (om/props this)]
       (dom/div
        #js {:className "TodosView"}
-       (todos-list list)
-       (new-todo-form todo-form)))))
+       (dom/div
+        #js {:className "TodosView__container"}
+        (todos-list list)
+        (new-todo-form todo-form))))))
 
 (def todos-view (om/factory TodosView))
