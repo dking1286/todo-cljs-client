@@ -3,21 +3,22 @@
             [om.dom :as dom]
             [cljs-react-material-ui.core :as mui]
             [components.navbar.core :refer [navbar]]
-            [components.todos-view.core :refer [todos-view TodosView]]))
+            [components.todos-view.core :refer [todos-view TodosView]]
+            [components.todo.core :refer [Todo]]
+            [components.new-todo-form.core :refer [NewTodoForm]]))
 
 (defui Root
   static om/IQuery
   (query [this]
-    (let [todos-view-query (om/get-query TodosView)]
-      `[~@todos-view-query]))
+    `[{:todos/list ~(om/get-query Todo)}
+      {:todos/new-todo-form ~(om/get-query NewTodoForm)}])
 
   Object
   (render [this]
-    (let [{:keys [greeting] :as props} (om/props this)]
-      (mui/mui-theme-provider
-       (dom/div
-        #js {:className "Root"}
-        (navbar)
-        (todos-view props))))))
+    (mui/mui-theme-provider
+     (dom/div
+      #js {:className "Root"}
+      (navbar)
+      (todos-view (om/props this))))))
 
 (def root (om/factory Root))

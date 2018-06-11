@@ -7,12 +7,6 @@
             [components.new-todo-form.core :refer [NewTodoForm new-todo-form]]))
 
 (defui TodosView
-  static om/IQuery
-  (query [this]
-    (let [todo-query (om/get-query Todo)
-          new-todo-form-query (om/get-query NewTodoForm)]
-      `[{:todos/list ~todo-query} {:todos/new-todo-form ~new-todo-form-query}]))
-
   Object
   (render [this]
     (let [{list :todos/list todo-form :todos/new-todo-form} (om/props this)]

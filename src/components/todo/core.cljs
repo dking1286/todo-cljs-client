@@ -22,4 +22,4 @@
         (mui/card-text body))))))
 
 (def todo
-  (om/factory Todo {:keyfn :id})) ;; Add keyfn?
+  (om/factory Todo {:keyfn :id}))
