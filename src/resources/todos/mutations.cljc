@@ -25,3 +25,9 @@
    #(swap! state (fn [st]
                    (assoc st :todos/selected [:todos/by-id id])))})
 
+(defmethod mutate 'todos/change-new-todo-form
+  [{:keys [state]} _ params]
+  {:value {:keys [:todos/new-todo-form]}
+   :action
+   #(swap! state (fn [st]
+                   (update st :todos/new-todo-form merge params)))})

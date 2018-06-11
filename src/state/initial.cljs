@@ -1,7 +1,7 @@
 (ns state.initial)
 
 (def initial-state
-  {:greeting "Hello world"
-   :todos/list []
+  {:todos/list []
    :todos/by-id {}
-   :todos/selected nil})
+   :todos/selected nil
+   :todos/new-todo-form {:title nil :body nil :expanded? false}})
