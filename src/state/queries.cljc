@@ -1,4 +1,5 @@
-(ns state.queries)
+(ns state.queries
+  (:refer-clojure :exclude [read]))
 
 (defmulti read (fn [env key params] key))
 

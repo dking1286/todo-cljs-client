@@ -1,4 +1,5 @@
 (ns resources.todos.reads
+  (:refer-clojure :exclude [read])
   (:require [state.queries :refer [read]]))
 
 (defmethod read :todos/list
