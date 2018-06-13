@@ -144,6 +144,9 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: list workspace
+          command: ls workspace/out
+      - run:
           name: Build and publish container
           command: |
             echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME --password-stdin
