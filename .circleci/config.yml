@@ -148,6 +148,8 @@ jobs:
           command: |
             ls workspace/out
             ls workspace/out/resources
+            ls workspace/out/resources/public/css
+            ls workspace/out/resources/public/js/compiled
       - run:
           name: Build and publish container
           command: |
