@@ -74,12 +74,27 @@ jobs:
       - run:
           name: Copy to workspace
           command: |
-            mkdir -p workspace/out/resources/public
-            cp -r ./resources/public/* ./workspace/out/resources/public
+            mkdir -p workspace/out/resources/public/js/compiled
+            cp -r ./resources/public/js/compiled/main.js ./workspace/out/resources/public/js/compiled
       - persist_to_workspace:
           root: workspace
           paths:
             - out
+  
+  build-client-styles:
+    working_directory: ~/todo-cljs-client
+    docker:
+      - image: ubuntudesign/sass
+    steps:
+      - checkout
+      - run:
+          name: Build styles
+          command: sass resources/sass/index.scss resources/public/css/index.css
+      - run:
+          name: Copy to workspace
+          command: |
+            mkdir -p workspace/out/resources/public/css
+            cp -r ./resources/public/css/index.css ./workspace/out/resources/public/css
 
   build-server:
     working_directory: ~/todo-cljs-client
@@ -164,12 +179,14 @@ workflows:
       - test-client
       - test-server
       - build-client
+      - build-client-styles
       - build-server
       - build-container:
           requires:
             - test-client
             - test-server
             - build-client
+            - build-client-styles
             - build-server
       - deploy-container-staging:
           requires:

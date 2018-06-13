@@ -129,6 +129,4 @@
                         ["with-profile" "prod" "ring" "uberjar"]]
    "build-client:prod" ["do"
                         "clean-client"
-                        ["with-profile" "prod" "cljsbuild" "once" "app-prod"]
-                        ["shell" "sass" "resources/sass/index.scss" "resources/public/css/index.css" --sourcemap=none]
-                        "clean-all-outputs"]})
+                        ["with-profile" "prod" "cljsbuild" "once" "app-prod"]]})
