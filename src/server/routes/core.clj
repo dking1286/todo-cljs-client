@@ -6,4 +6,5 @@
 (defroutes root-handler
   (GET "/" []
     (-> (r/resource-response "index.html" {:root "public"})
-        (r/content-type "text/html"))))
+        (r/content-type "text/html")))
+  (route/not-found {:status 404}))
