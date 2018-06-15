@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,iDAAiD;ACAjD,0DAA0D;ACA1D,YAAa;EACT,MAAM,EAAE,IAAI;;AFGhB,IAAK;EACD,MAAM,EAAE,CAAC",
-"sources": ["../../../../sass/index.scss","../../../../sass/_components.scss","../../../../../src/components/top_nav_bar/_style.scss"],
-"names": [],
-"file": "index.css"
-}
