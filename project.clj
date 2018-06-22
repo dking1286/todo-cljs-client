@@ -9,7 +9,7 @@
                  [org.clojure/core.async "0.4.474"]
                  [environ "1.1.0"]
                  [ring "1.6.3"]
-                 [ring-logger "0.7.7"]
+                 [ring-logger "1.0.1"]
                  [compojure "1.6.0"]
                  [com.cognitect/transit-cljs "0.8.256"]
                  [org.omcljs/om "1.0.0-beta4"]
@@ -101,8 +101,7 @@
                    ["shell" "echo" "'Cleaning compiled client files'"]
                    ["shell" "rm" "-f" "resources/public/js/compiled/main.js"]
                    ["shell" "rm" "-rf" "resources/public/js/compiled/dev-out"]
-                   ["shell" "rm" "-rf" "resources/public/js/compiled/prod-out"]
-                   ["shell" "rm" "-f" "resources/public/css/*"]]
+                   ["shell" "rm" "-rf" "resources/public/js/compiled/prod-out"]]
    "clean-tests" ["do"
                   ["shell" "rm" "-f" "resources/public/js/compiled/tests-main.js"]
                   ["shell" "rm" "-rf" "resources/public/js/compiled/tests-out"]]

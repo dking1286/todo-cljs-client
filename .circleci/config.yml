@@ -47,87 +47,6 @@ jobs:
       - run:
           name: Run all server tests
           command: lein test-server:once
-
-  build-client:
-    working_directory: ~/todo-cljs-client
-    environment:
-      LEIN_ROOT: nbd
-      JVM_OPTS: -Xmx3200m
-      CIRCLECI_CACHE_KEY: todo-cljs-client-{{ checksum "project.clj" }}
-    docker:
-      - image: circleci/clojure:lein-2.7.1
-    steps:
-      - checkout
-      - restore_cache:
-          key: $CIRCLECI_CACHE_KEY  
-      - run:
-          name: Install dependencies
-          command: lein deps
-      - save_cache:
-          paths:
-            - ~/.m2
-            - ~/.lein
-          key: $CIRCLECI_CACHE_KEY
-      - run:
-          name: Build client binary
-          command: lein build-client:prod
-      - run:
-          name: Copy to workspace
-          command: |
-            mkdir -p workspace/out/resources/public/js/compiled
-            cp -r ./resources/public/js/compiled/main.js ./workspace/out/resources/public/js/compiled
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - out
-  
-  build-client-styles:
-    working_directory: ~/todo-cljs-client
-    docker:
-      - image: ubuntudesign/sass
-    steps:
-      - checkout
-      - run:
-          name: Build styles
-          command: sass resources/sass/index.scss resources/public/css/index.css
-      - run:
-          name: Copy to workspace
-          command: |
-            mkdir -p workspace/out/resources/public/css
-            cp -r ./resources/public/css/index.css ./workspace/out/resources/public/css
-
-  build-server:
-    working_directory: ~/todo-cljs-client
-    environment:
-      LEIN_ROOT: nbd
-      JVM_OPTS: -Xmx3200m
-      CIRCLECI_CACHE_KEY: todo-cljs-client-{{ checksum "project.clj" }}
-    docker:
-      - image: circleci/clojure:lein-2.7.1
-    steps:
-      - checkout
-      - restore_cache:
-          key: $CIRCLECI_CACHE_KEY  
-      - run:
-          name: Install dependencies
-          command: lein deps
-      - save_cache:
-          paths:
-            - ~/.m2
-            - ~/.lein
-          key: $CIRCLECI_CACHE_KEY
-      - run:
-          name: Build server binary
-          command: lein build-server:prod
-      - run:
-          name: Copy to workspace
-          command: |
-            mkdir -p workspace/out/resources/public
-            cp ./target/uberjar/todo-cljs-client-standalone.jar ./workspace/out/app.jar
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - out
     
   build-container:
     working_directory: ~/todo-cljs-client
@@ -144,21 +63,10 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: list workspace
-          command: |
-            ls workspace/out
-            ls workspace/out/resources
-            ls workspace/out/resources/public/css
-            ls workspace/out/resources/public/js/compiled
-      - run:
           name: Build and publish container
           command: |
             echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME --password-stdin
-            docker build \
-              --build-arg JAR_PATH="./workspace/out/app.jar" \
-              --build-arg RESOURCE_PUBLIC_PATH="./workspace/out/resources/public" \
-              . \
-              -t "dking1286/todo-cljs-client:${CIRCLE_SHA1}"
+            docker build . -t "dking1286/todo-cljs-client:${CIRCLE_SHA1}"
             docker push dking1286/todo-cljs-client
 
   deploy-container-staging:

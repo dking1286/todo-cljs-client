@@ -2,6 +2,7 @@
   (:require [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.not-modified :refer [wrap-not-modified]]
+            [ring.logger :refer [wrap-with-logger]]
             [server.routes.core :refer [root-handler]]
             [environ.core :refer [env]]))
 
@@ -13,4 +14,5 @@
   (-> root-handler
       (wrap-resource "public")
       (wrap-content-type)
-      (wrap-not-modified)))
+      (wrap-not-modified)
+      (wrap-with-logger)))
