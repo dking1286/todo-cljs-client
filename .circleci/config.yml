@@ -93,16 +93,10 @@ workflows:
     jobs:
       - test-client
       - test-server
-      - build-client
-      - build-client-styles
-      - build-server
       - build-container:
           requires:
             - test-client
             - test-server
-            - build-client
-            - build-client-styles
-            - build-server
       - deploy-container-staging:
           requires:
             - build-container
